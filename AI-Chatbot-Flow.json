@@ -1,0 +1,455 @@
+[
+    {
+        "id": "d6a8dfbe856f58cf",
+        "type": "comment",
+        "z": "17979232dade4e09",
+        "name": "AI Chatbot",
+        "info": "",
+        "x": 740,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "06d39cc636456b52",
+        "type": "uibuilder",
+        "z": "17979232dade4e09",
+        "name": "",
+        "topic": "",
+        "url": "ai-chatbot",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "esm-blank-client",
+        "extTemplate": "",
+        "showfolder": false,
+        "oldUrl": "chatbot",
+        "reload": true,
+        "sourceFolder": "src",
+        "deployedVersion": "6.6.0",
+        "showMsgUib": true,
+        "title": "",
+        "descr": "",
+        "x": 970,
+        "y": 700,
+        "wires": [
+            [
+                "3c4bb357c2e8073a",
+                "7c1ab7a4146d3a89"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7992bbca5ab450d4",
+        "type": "inject",
+        "z": "17979232dade4e09",
+        "name": "on StartUp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "FilePath",
+                "v": "uibuilder/ai-chatbot/src/index.html",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 770,
+        "y": 640,
+        "wires": [
+            [
+                "5791286f87d71936"
+            ]
+        ]
+    },
+    {
+        "id": "5791286f87d71936",
+        "type": "template",
+        "z": "17979232dade4e09",
+        "name": "index.html",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\" charset=\"utf-8\" style=\"width:100%\">\n\n<head>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\n  <meta name=\"viewport\" content=\"minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\" />\n\n  <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n  <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\" />\n  <meta name=\"format-detection\" content=\"telephone=no\">\n\n  <style name=\"mobile-prologue\">\n    html {\n      text-size-adjust: 100%;\n      -moz-text-size-adjust: 100%;\n      -webkit-text-size-adjust: 100%;\n      -o-text-size-adjust: 100%;\n      -ms-text-size-adjust: 100%;\n    }\n\n    html,\n    body {\n      width: 99%;\n      height: 99%;\n    }\n\n    html {\n      overflow: hidden scroll\n    }\n  </style>\n\n  <link rel=\"icon\" href=\"../uibuilder/images/node-blue.ico\">\n\n  <script type=\"importmap\">\n    {\n    \"imports\": {\n      \"javascript-interface-library\": \"https://rozek.github.io/node-red-uibilder-chatbot/js/javascript-interface-library.esm.js\",\n      \"JIL\":                          \"https://rozek.github.io/node-red-uibilder-chatbot/js/javascript-interface-library.esm.js\",\n\n      \"preact-with-htm\": \"https://rozek.github.io/node-red-uibilder-chatbot/js/preact-with-htm.esm.js\"\n    }\n  }\n  </script>\n\n  <style name=\"white-textured-background\">\n    html,\n    body {\n      background-color: white;\n      background-image: url(https://rozek.github.io/node-red-uibilder-chatbot/common/BinaryTexture_white.jpg);\n      background-repeat: repeat;\n\n      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      font-size: 14px;\n      font-weight: 400;\n      color: #111111;\n      line-height: 150%;\n    }\n\n    body {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 300px;\n      mrgin: 0px;\n      padding: 0px;\n    }\n\n    * {\n      -moz-box-sizing: border-box;\n      -webkit-box-sizing: border-box;\n      box-sizing: border-box;\n    }\n\n    .ait-message-view {\n      display: flex;\n      position: relative;\n      flex-flow: column nowrap;\n      align-items: stretch;\n      flex: 1 1 auto;\n      overflow: scroll;\n    }\n\n    .ait-user-message-view {\n      display: block;\n      position: relative;\n      margin: 10px 10px 10px 30px;\n      border: solid 1px gray;\n      border-radius: 10px;\n      background: #DDDDDD;\n      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);\n      padding: 10px;\n    }\n\n    .ait-progress-message-view {\n      display: block;\n      position: relative;\n      width: 80%;\n      margin: 0px 20px 0px 20px;\n    }\n\n    .ait-progress-aborted-icon {\n      display: inline-block;\n      position: relative;\n      width: 24px;\n      height: 24px;\n      top: 6px;\n      padding-right: 4px;\n      background: url(https://rozek.github.io/node-red-uibilder-chatbot/icons/bolt.svg);\n      background-size: contain;\n    }\n\n    .ait-progress-running-icon {\n      display: inline-block;\n      position: relative;\n      width: 24px;\n      height: 24px;\n      top: 6px;\n      padding-right: 4px;\n      background: url(https://rozek.github.io/node-red-uibilder-chatbot/icons/hourglass.svg);\n      background-size: contain;\n    }\n\n    .ait-progress-finished-icon {\n      display: inline-block;\n      position: relative;\n      width: 24px;\n      height: 24px;\n      top: 6px;\n      padding-right: 4px;\n      background: url(https://rozek.github.io/node-red-uibilder-chatbot/icons/circle-check.svg);\n      background-size: contain;\n    }\n\n    .ait-assistant-message-view {\n      display: block;\n      position: relative;\n      width: 80%;\n      margin: 10px 30px 10px 10px;\n      border: solid 1px gray;\n      border-radius: 10px;\n      background: #DDDDDD;\n      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);\n      padding: 10px;\n    }\n  </style>\n\n\n  <script type=\"module\">\n    import { render, html, signal, Component } from 'preact-with-htm'\n\n  import '../uibuilder/uibuilder.esm.min.js'// adds `uibuilder` & `$` to globals\n\n/**** reactive State ****/\n\n  const reactiveState = signal({\n    availableModels:[],\n    chosenModel:'',\n    MessageList:[\n      { role:'hello', content:'Hello, what can I do for you?' },\n      { role:'system', content:`\nYou are a highly intelligent and advanced language model developed to assist\nusers in a chat-based interface. You are patient and polite, always maintaining\na respectful tone in your interactions. You are designed to think very carefully\nbefore responding, ensuring that your answers are precise, concise, and directly\naddress the user's query. You strive to provide accurate and relevant\ninformation, avoiding unnecessary details. Your goal is to facilitate a smooth\nand efficient conversation, making the user's experience as pleasant and\nproductive as possible.\n      `.trim().replace(/\\n/g,' ') },\n    ],\n    StatusMessage:'please enter your request',\n  })\n\n/**** handling of incoming messages ****/\n\n  uibuilder.onChange('msg', (msg) => {\n    console.log('incoming uibuilder msg',msg)\n    switch (msg.topic) {\n      case 'reload-web-page':\n        reloadPage()\n        break\n      case 'model-list':\n        reactiveState.value = { ...reactiveState.value, availableModels:msg.payload.slice() }\n        break\n      case 'status-message':\n        reactiveState.value = { ...reactiveState.value, StatusMessage:msg.payload }\n        break\n      case 'progress-message':\n        setProgress(msg.ActionId,msg.ActionProgress,msg.payload)\n        break\n      case 'chat-completion':\n        reactiveState.value.MessageList.push({ role:'assistant',content:msg.payload })\n        reactiveState.value = { ...reactiveState.value }\n    }\n  })\n\n  function reloadPage () {\n    const newLocation = (\n      /^[?]([^&]+&)*_=\\d+(&|$)/.test(window.location.search || '')\n      ? window.location.href.replace(/_=\\d+/,'_=' + Date.now())\n      : window.location.href + '?_=' + Date.now()\n    )\n    window.location.href = newLocation\n  }\n\n  function setProgress (ActionId, ActionProgress, Content) {\n    let MessageList = reactiveState.value.MessageList\n      let ActionIndex = -1\n      for (let i = 0, l = MessageList.length; i < l; i++) {\n        if ((MessageList[i].role === 'action') && (MessageList[i].id === ActionId)) {\n          ActionIndex = i; break\n        }\n      }\n    if (ActionIndex < 0) {\n      MessageList.push({\n        role:'action', id:ActionId,\n        progress:ActionProgress, content:Content\n      })\n    } else {\n      Object.assign(MessageList[ActionIndex],{\n        progress:ActionProgress, content:Content\n      })\n    }\n    reactiveState.value = { ...reactiveState.value }\n  }\n\n/**** UserMessageView ****/\n\n  class UserMessageView extends Component {\n    render (PropSet) {\n      let Content = PropSet.message.content\n      return html`<div class=\"ait-user-message-view\">${Content}</div>`\n    }\n  }\n\n/**** ProgressMessageView ****/\n\n  class ProgressMessageView extends Component {\n    render (PropSet) {\n      let Progress = PropSet.message.progress\n      let Content  = PropSet.message.content\n\n      let Icon\n      switch (true) {\n        case (Progress < 0): Icon = html`<div class=\"ait-progress-aborted-icon\"/>`; break\n        case (Progress < 1): Icon = html`<div class=\"ait-progress-running-icon\"/>`; break\n        default:             Icon = html`<div class=\"ait-progress-finished-icon\"/>`; break\n      }\n\n      return html`<div class=\"ait-progress-message-view\">\n        ${Icon} ${Content}\n      </div>`\n    }\n  }\n\n/**** AssistantMessageView ****/\n\n  class AssistantMessageView extends Component {\n    render (PropSet) {\n      let Content = PropSet.message.content\n      return html`<div class=\"ait-assistant-message-view\">${Content}</div>`\n    }\n  }\n\n/**** MessageView ****/\n\n  class MessageView extends Component {\n    render (PropSet) {\n      return html`<div class=\"ait-message-view\">\n        ${reactiveState.value.MessageList.map((Message) => {\n          switch (Message.role) {\n            case 'user':      return html`<${UserMessageView}      message=${Message}/>`\n            case 'action':    return html`<${ProgressMessageView}  message=${Message}/>`\n            case 'hello':      // nasty trick to show an initial \"Hello\" message\n            case 'assistant': return html`<${AssistantMessageView} message=${Message}/>`\n          }\n        })}\n      </div>`\n    }\n  }\n\n/**** ArenaView ****/\n\n  class ArenaView extends Component {\n    state = { UserInput:'' }\n\n    render (PropSet) {\n      if ((this.state.Model === '') && (reactiveState.value.availableModels.length > 0)) {\n        this.state.Model = reactiveState.value.availableModels[0]\n      }\n\n      const onModelChange = (Event) => {\n        const Element     = Event.target\n        const chosenModel = Element.options[Element.selectedIndex].value\n        reactiveState.value = {\n          ...reactiveState.value, chosenModel,\n          StatusMessage:'thanks, now enter your request'\n        }\n      }\n\n      const onUserInput = (Event) => {\n        this.setState({ UserInput:Event.target.value })\n      }\n\n      const submit = (Event) => {\n        const { UserInput } = this.state\n\n        const MessageList = reactiveState.value.MessageList\n        MessageList.push({ role:'user',content:UserInput })\n        reactiveState.value = { ...reactiveState.value }\n\n        uibuilder.send({\n          'topic':  'complete-chat',\n          'payload':MessageList.filter(\n            (Message) => (Message.role !== 'action') && (Message.role !== 'hello')\n          ),\n          Model:reactiveState.value.chosenModel,\n          ContextLength:4096, PredictionLength:512,\n          topK:10, topP:0.95, Temperature:0\n        })\n      }\n\n      const readyForSubmit = (this.state.UserInput !== '')\n\n      return html`<div style=\"\n        display:flex; position:absolute; flex-flow:column nowrap; align-items:stretch;\n        left:0px; top:0px; right:0px; bottom:0px;\n      \">\n        <div style=\"flex:0 0 auto; font-size:22px\">Node-RED-UIBuilder-Chatbot</div>\n          <div style=\"flex:0 0 auto; height:10px\"/>\n        <div style=\"flex:0 0 auto\">\n          This is just a simple example for the<span> </span>\n          <a href=\"https://github.com/rozek/node-red-ai-toolkit\">node-red-ai-toolkit</a>.<span> </span>\n          Please visit<span> </span>\n          <a href=\"https://github.com/rozek/node-red-uibilder-chatbot\">node-red-uibilder-chatbot</a><span> </span>\n          to learn how to install this chatbot and run everything on your\n          own machine.\n        </div>\n          <div style=\"flex:0 0 auto; height:10px\"/>\n        <div>\n          Model:\n          <select onChange=${onModelChange} style=\"margin-left:10px; min-width:120px\">\n            ${reactiveState.value.availableModels.map(\n              (Model) => html`<option\n                selected=${reactiveState.value.chosenModel === Model}\n              >${Model}</option>`\n            )}\n          </select>\n        </div>\n          <div style=\"flex:0 0 auto; height:10px\"/>\n        <${MessageView}/>\n          <div style=\"flex:0 0 auto; height:10px\"/>\n        <div style=\"display:block; position:relative; flex:0 0 auto; height:30px\">\n          <span style=\"top:10px\">Your Input:</span>\n          <button disabled=${! readyForSubmit} style=\"\n             display:inline-block; position:absolute;\n             left:auto; top:-4px; right:0px;\n             width:100px; height:30px;\n           \"\n            onClick=${submit}\n          ><b>Submit</b></button>\n        </div>\n        <textarea onInput=${onUserInput} style=\"flex:0 0 auto; height:50px\"></textarea>\n        <div style=\"margin-top:10px\">${reactiveState.value.StatusMessage}</div>\n      </div>`\n    }\n  }\n\n  render(html`<${ArenaView}/>`,document.getElementById('Arena'))\n  console.log('page was loaded, URL = ' + window.location)\n\n  uibuilder.send({ 'topic':'list-models', 'payload':'' })\n  console.log('model-list was requested')\n  </script>\n</head>\n\n<body>\n\n  <div id=\"Arena\" style=\"\n    display:inline-block; position:relative;\n    width:600px; height:100%; min-height:300px;\n    margin:0px; padding:0px;\n  \"></div>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 950,
+        "y": 640,
+        "wires": [
+            [
+                "3e6f57752773f3aa"
+            ]
+        ]
+    },
+    {
+        "id": "3e6f57752773f3aa",
+        "type": "function",
+        "z": "17979232dade4e09",
+        "name": "for /ai-chatbot",
+        "func": "  let Contents = '' + (msg.payload || '')\n\n  let FilePath = ('' + (msg.FilePath || '')).trim()\n  if (FilePath === '') {\n    throw new Error('no file output path given')\n  }\n\n/**** write payload to file ****/\n\n  fs.writeFileSync(\n    path.join(process.env.HOME + '/.node-red',FilePath),Contents\n  )\n\n  node.status({ fill:'green', shape:'dot', text:'file written' })\n\n  Object.assign(msg,{\n    topic:  'reload-web-page',\n    payload:'',\n  })\n\n  return msg\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fs",
+                "module": "fs"
+            },
+            {
+                "var": "path",
+                "module": "path"
+            },
+            {
+                "var": "process",
+                "module": "process"
+            }
+        ],
+        "x": 1140,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c4bb357c2e8073a",
+        "type": "switch",
+        "z": "17979232dade4e09",
+        "name": "complete-chat",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "complete-chat",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 880,
+        "wires": [
+            [
+                "52f5c7b34a64d108",
+                "05bf77d040a0fdc3"
+            ]
+        ]
+    },
+    {
+        "id": "52f5c7b34a64d108",
+        "type": "reusable",
+        "z": "17979232dade4e09",
+        "name": "complete-chat",
+        "target": "node-red-ai-toolkit:complete_chat",
+        "outputs": 2,
+        "x": 980,
+        "y": 880,
+        "wires": [
+            [
+                "3dcbfadcd4b2ecb9"
+            ],
+            [
+                "9ce5709e1b11072d"
+            ]
+        ],
+        "outputLabels": [
+            "success",
+            "failure"
+        ]
+    },
+    {
+        "id": "9ce5709e1b11072d",
+        "type": "debug",
+        "z": "17979232dade4e09",
+        "name": "internal error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "54b855864fd71b7d",
+        "type": "inject",
+        "z": "17979232dade4e09",
+        "name": "manual Reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "reload-web-page",
+        "payload": "(n/a)",
+        "payloadType": "str",
+        "x": 780,
+        "y": 700,
+        "wires": [
+            [
+                "06d39cc636456b52"
+            ]
+        ]
+    },
+    {
+        "id": "05bf77d040a0fdc3",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "\"computing response\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "status-message",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "computing response, please wait...",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 940,
+        "wires": [
+            [
+                "06d39cc636456b52"
+            ]
+        ]
+    },
+    {
+        "id": "3dcbfadcd4b2ecb9",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "send response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "chat-completion",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1180,
+        "y": 880,
+        "wires": [
+            [
+                "06d39cc636456b52",
+                "fc811113ebdfb7fd"
+            ]
+        ]
+    },
+    {
+        "id": "fc811113ebdfb7fd",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "\"finished\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "status-message",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ready for follow-up",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1160,
+        "y": 940,
+        "wires": [
+            [
+                "06d39cc636456b52"
+            ]
+        ]
+    },
+    {
+        "id": "61adabd652777647",
+        "type": "reusable",
+        "z": "17979232dade4e09",
+        "name": "list_models",
+        "target": "node-red-ai-toolkit:list_models",
+        "outputs": 2,
+        "x": 950,
+        "y": 760,
+        "wires": [
+            [
+                "7b8a1751fddd6b23"
+            ],
+            []
+        ],
+        "outputLabels": [
+            "success",
+            "failure"
+        ]
+    },
+    {
+        "id": "7b8a1751fddd6b23",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "send model-list",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "model-list",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 760,
+        "wires": [
+            [
+                "971ae7934149c657",
+                "06d39cc636456b52"
+            ]
+        ]
+    },
+    {
+        "id": "7c1ab7a4146d3a89",
+        "type": "switch",
+        "z": "17979232dade4e09",
+        "name": "list-models",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "list-models",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 770,
+        "y": 760,
+        "wires": [
+            [
+                "61adabd652777647",
+                "a11643829bdec5dd"
+            ]
+        ]
+    },
+    {
+        "id": "a11643829bdec5dd",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "\"looking for models\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "status-message",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "looking for models, please wait...",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 820,
+        "wires": [
+            [
+                "06d39cc636456b52"
+            ]
+        ]
+    },
+    {
+        "id": "971ae7934149c657",
+        "type": "change",
+        "z": "17979232dade4e09",
+        "name": "\"models loaded\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "status-message",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "models loaded, please choose one",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 820,
+        "wires": [
+            [
+                "06d39cc636456b52"
+            ]
+        ]
+    }
+]
